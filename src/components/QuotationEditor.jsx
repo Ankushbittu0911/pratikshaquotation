@@ -13,8 +13,8 @@ function QuotationEditor({ quotation: initialQuotation, onSave, onCancel }) {
   }, []);
 
   const loadClientIntoQuotation = (clientId) => {
-    // Check both MongoDB _id and legacy id
-    const client = savedClients.find(c => c._id === clientId || c.id?.toString() === clientId);
+    // Check both MongoDB _id and legacy id robustly
+    const client = savedClients.find(c => String(c._id) === String(clientId) || String(c.id) === String(clientId));
     if (client) {
       const formattedAddress = [
         client.companyName,
@@ -24,6 +24,8 @@ function QuotationEditor({ quotation: initialQuotation, onSave, onCancel }) {
       ].filter(Boolean).join('\n');
       
       setQuotation(prev => ({ ...prev, client: formattedAddress }));
+    } else {
+      console.error("Client not found for ID:", clientId);
     }
   };
 
