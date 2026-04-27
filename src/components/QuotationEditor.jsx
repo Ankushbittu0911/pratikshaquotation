@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Save, X, Plus, Trash2, ArrowRight } from 'lucide-react';
+import axios from 'axios';
 
 function QuotationEditor({ quotation: initialQuotation, onSave, onCancel }) {
   const [quotation, setQuotation] = useState({ ...initialQuotation });
-  const [savedClients, setSavedClients] = useState(() => {
-    const saved = localStorage.getItem('pt_clients_db');
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [savedClients, setSavedClients] = useState([]);
+
+  useEffect(() => {
+    axios.get('/api/clients')
+      .then(res => setSavedClients(res.data))
+      .catch(err => console.error('Failed to load clients', err));
+  }, []);
 
   const loadClientIntoQuotation = (clientId) => {
-    const client = savedClients.find(c => c.id.toString() === clientId);
+    // Check both MongoDB _id and legacy id
+    const client = savedClients.find(c => c._id === clientId || c.id?.toString() === clientId);
     if (client) {
       const formattedAddress = [
         client.companyName,
@@ -101,7 +106,7 @@ function QuotationEditor({ quotation: initialQuotation, onSave, onCancel }) {
                 >
                   <option value="">-- Load Saved Client --</option>
                   {savedClients.map(c => (
-                    <option key={c.id} value={c.id}>{c.companyName}</option>
+                    <option key={c._id || c.id} value={c._id || c.id}>{c.companyName}</option>
                   ))}
                 </select>
               </div>
