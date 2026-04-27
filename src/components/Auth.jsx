@@ -27,7 +27,7 @@ function Auth({ onLogin }) {
     <div className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
       <div className="glass-panel animate-fade-in" style={{ width: '100%', maxWidth: '400px', padding: '2rem' }}>
         <h2 className="text-2xl mb-6 text-center" style={{ color: 'var(--primary-color)' }}>
-          {isLogin ? 'Pratiksha ERP Login' : 'Create Admin Account'}
+          {isLogin ? 'Pratiksha Quotation Login' : 'Create Admin Account'}
         </h2>
 
         {error && (
