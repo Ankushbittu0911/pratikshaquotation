@@ -158,7 +158,7 @@ function QuotationPreview({ quotation, onBack }) {
             <tbody>
               <tr>
                 <td style={{ border: '1px solid black', padding: '5px', fontWeight: 'bold', width: '15%' }}>Client</td>
-                <td style={{ border: '1px solid black', padding: '5px' }} colSpan="3">{quotation.client || '_______________________'}</td>
+                <td style={{ border: '1px solid black', padding: '5px', whiteSpace: 'pre-wrap' }} colSpan="3">{quotation.client || '_______________________'}</td>
               </tr>
               <tr>
                 <td style={{ border: '1px solid black', padding: '5px', fontWeight: 'bold' }}>Project</td>
