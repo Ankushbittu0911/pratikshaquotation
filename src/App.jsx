@@ -147,7 +147,19 @@ function App() {
 
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this quotation?')) {
-      setQuotations(quotations.filter((q) => q.id !== id));
+      const qToDelete = quotations.find(q => q.id === id || q._id === id);
+      const dbId = qToDelete ? (qToDelete._id || qToDelete.id) : id;
+      
+      axios.delete(`/api/quotations/${dbId}`)
+        .then(() => {
+          setQuotations(quotations.filter((q) => q.id !== id && q._id !== id));
+        })
+        .catch(err => {
+          console.error('Failed to delete quotation', err);
+          alert('Failed to delete from cloud. It might not exist on the server.');
+          // Still remove locally if we failed, just in case it was a local-only draft
+          setQuotations(quotations.filter((q) => q.id !== id && q._id !== id));
+        });
     }
   };
 
