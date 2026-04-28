@@ -226,11 +226,13 @@ function App() {
 
   return (
     <div className="app-container" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <header className="glass-panel no-print" style={{ 
+      <header className="glass-panel no-print header-mobile-wrap" style={{ 
         padding: '1rem 2rem', 
         display: 'flex', 
         justifyContent: 'space-between',
         alignItems: 'center',
+        flexWrap: 'wrap',
+        gap: '1rem',
         borderBottom: '1px solid var(--border-color)',
         position: 'sticky',
         top: 0,
@@ -259,8 +261,8 @@ function App() {
         </div>
         
         {user && (
-          <nav style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-            <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginRight: '1rem' }}>
+          <nav className="nav-mobile-wrap" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginRight: '0.5rem' }} className="hide-on-mobile">
               Welcome, {user.name}
             </span>
             <button 
